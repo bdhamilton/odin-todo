@@ -49,11 +49,6 @@ For now I might actually just simplify projects.
 
 class Project {
   constructor(title, description) {
-    if (title === undefined) {
-      console.log("You need at least a title!");
-      return;
-    }
-
     this.title = title;
     this.description = description;
     this.todos = [];  // This blank array is where we'll keep our list of todos.
@@ -78,9 +73,14 @@ class Project {
 }
 
 function addProject(title, description) {
+  if (!title) {
+    console.log("Your project needs a title!");
+    return;
+  }
+
   const nextProject = new Project(title, description);
   projectList.push(nextProject);
-  console.log(projectList);
+  console.log(projectList[projectList.length - 1]);
 }
 
 // Initialize default project and add it to our master project list.
