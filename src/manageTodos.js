@@ -76,3 +76,16 @@ class Project {
     console.table(this);
   }
 }
+
+function addProject(title, description) {
+  const nextProject = new Project(title, description);
+  projectList.push(nextProject);
+  console.log(projectList);
+}
+
+// Initialize default project and add it to our master project list.
+const projectList = [];
+const baseProject = new Project("Inbox", "This is where all of your todos live by default. If you'd like to add a new project, call `addProject()`.");
+projectList.push(baseProject);
+
+export {Todo, Project, addProject};
