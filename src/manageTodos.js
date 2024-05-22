@@ -32,6 +32,7 @@ class Todo {
         logError("You can't set a todo's title to blank.");
       } else {
         this[field] = value;
+        console.log(`Updated the ${field} of this todo to ${value}.`);
       }
     } else {
       logError("You can only update titles, descriptions, due dates, and priority levels.");
@@ -61,6 +62,7 @@ class Project {
         logError("You can't set a todo's title to blank.");
       } else {
         this[field] = value;
+        console.log(`Updated the ${field} of this todo.`);
       }
     } else {
       logError("You can only update titles and descriptions.");
@@ -86,7 +88,9 @@ function addProject(title, description) {
 
   const nextProject = new Project(title, description);
   projectList.push(nextProject);
-  console.log(projectList[projectList.length - 1]);
+
+  console.log(`Adding "${title}" to your list of projects...`);
+  console.log(`You now have ${projectList.length} working projects.`)
 }
 
 function addTodo(title, project = 0) {
@@ -97,6 +101,8 @@ function addTodo(title, project = 0) {
 
   const nextTodo = new Todo(title);
   projectList[project].push(nextTodo);
+
+  console.log(`Adding your task to ${projectList[project].title}...`);
 }
 
 // Initialize default project and add it to our master project list.
