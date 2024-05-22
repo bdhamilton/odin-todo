@@ -1,7 +1,19 @@
+import logError from "./logger";
+
+/*
+
+All editing and storing of todos and projects should be handled in this module.
+Right now I'm having this module handle a few errors and log a few things,
+but I think I should delete all of that stuff when the rest of the program is
+done. Errors should be ruled out at point of input, and I don't want to rely
+on console logging for any sort of notices.
+
+*/
+
 class Todo {
   constructor(title, projectID = 0, description, dueDate, priority = "normal") {
     if (title === undefined) {
-      console.log("You need at least a title!");
+      logError("You need at least a title!");
       return;
     }
 
@@ -17,12 +29,12 @@ class Todo {
     // Make sure we're updating a legitimate field.
     if (field === "title" || field === "description" || field === "dueDate" || field === "priority") {
       if (field === "title" && !value) {
-        console.log("You can't set a todo's title to blank.");
+        logError("You can't set a todo's title to blank.");
       } else {
         this[field] = value;
       }
     } else {
-      console.log("You can only update titles, descriptions, due dates, and priority levels.");
+      logError("You can only update titles, descriptions, due dates, and priority levels.");
     }
   }
 
@@ -35,18 +47,6 @@ class Todo {
   }
 }
 
-/* 
-CONSIDER:
-The fact that these two classes are identical makes me think there's
-a simpler way of storing this data. Should projects be an extension
-of the todo class? That feels strange because projects _contain_ todos, 
-but I'm not sure that subclasses necessary need to be child classes.
-The only difference between the two classes is that projects include a
-list of todos inside them.
-
-For now I might actually just simplify projects. 
-*/
-
 class Project {
   constructor(title, description) {
     this.title = title;
@@ -58,12 +58,12 @@ class Project {
     // Make sure we're updating a legitimate field.
     if (field === "title" || field === "description") {
       if (field === "title" && !value) {
-        console.log("You can't set a todo's title to blank.");
+        logError("You can't set a todo's title to blank.");
       } else {
         this[field] = value;
       }
     } else {
-      console.log("You can only update titles and descriptions.");
+      logError("You can only update titles and descriptions.");
     }
   }
 
@@ -72,9 +72,15 @@ class Project {
   }
 }
 
+/*
+I'm creating this function with the thought that I don't want the 
+`projectList` variable to be modifiable from the main script. If I only
+export this function and not the variable, does 
+that shield it?
+*/
 function addProject(title, description) {
   if (!title) {
-    console.log("Your project needs a title!");
+    logError("Your project needs a title!");
     return;
   }
 
@@ -83,9 +89,20 @@ function addProject(title, description) {
   console.log(projectList[projectList.length - 1]);
 }
 
+function addTodo(title, project = 0) {
+  if (!title) {
+    logError("Your todo needs a title!");
+    return;
+  }
+
+  const nextTodo = new Todo(title);
+  projectList[project].push(nextTodo);
+}
+
 // Initialize default project and add it to our master project list.
 const projectList = [];
-const baseProject = new Project("Inbox", "This is where all of your todos live by default. If you'd like to add a new project, call `addProject()`.");
+const baseProject = new Project("Inbox", "This is where all of your todos live by default.");
 projectList.push(baseProject);
 
-export {Todo, Project, addProject};
+// Do I need to export the classes in order to use their constructors?
+export {Todo, Project, addProject, addTodo};
