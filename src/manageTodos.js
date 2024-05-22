@@ -99,13 +99,14 @@ that shield it?
 const todoList = {
   projects: [new Project("Inbox", "This is where all of your todos live by default.")],
   getNumber: function () { return this.projects.length },
-  display: function () { console.table(this.projects) },
+  display: function () { console.table(this.projects) }, // For debugging
   addProject: function (title) { 
     if (!title) {
       logError("Your project needs a title!");
       return;
     }
     this.projects.push(new Project(title));
+    this.display();
   },
   addTodo: function (title, project = 0) {
     if (!title) {
@@ -113,15 +114,8 @@ const todoList = {
       return;
     }
     this.projects[project].todos.push(new Todo(title));
+    this.display();
   },
 }
 
-todoList.display();
-
-// Do I need to export the classes in order to use their constructors?
-export {
-  Todo,
-  Project,
-  addProject,
-  addTodo
-}
+export default todoList;
