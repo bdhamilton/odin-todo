@@ -10,10 +10,17 @@ function displayProjects(todoList) {
 }
 
 function displayTodos(project) {
-  console.log(`Here are the tasks in your ${project.title} project:`);
+  const todoList = document.querySelector("#todos");
+  
   for (let i = 0; i < project.todos.length; i++) {
-    let doneMark = project.todos[i].completed === true? "X" : " ";
-    console.log(`${i + 1}: [${doneMark}] ${project.todos[i].title}`);
+    const nextTask = document.createElement("li");
+    nextTask.dataset.id = i;
+    if (project.todos[i].completed === true) {
+      nextTask.classList.add("complete");
+    }
+    nextTask.innerText = project.todos[i].title;
+
+    todoList.appendChild(nextTask);
   }
 }
 
