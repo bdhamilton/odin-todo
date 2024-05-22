@@ -69,30 +69,30 @@ I'm creating this function with the thought that I don't want the
 export this function and not the variable, does 
 that shield it?
 */
-function addProject(title, description) {
-  if (!title) {
-    logError("Your project needs a title!");
-    return;
-  }
+// function addProject(title, description) {
+//   if (!title) {
+//     logError("Your project needs a title!");
+//     return;
+//   }
 
-  const nextProject = new Project(title, description);
-  todoList.projects.push(nextProject);
+//   const nextProject = new Project(title, description);
+//   todoList.projects.push(nextProject);
 
-  console.log(`Adding "${title}" to your list of projects...`);
-  console.log(`You now have ${todoList.getNumber()} working projects.`)
-}
+//   console.log(`Adding "${title}" to your list of projects...`);
+//   console.log(`You now have ${todoList.getNumber()} working projects.`)
+// }
 
-function addTodo(title, project = 0) {
-  if (!title) {
-    logError("Your todo needs a title!");
-    return;
-  }
+// function addTodo(title, project = 0) {
+//   if (!title) {
+//     logError("Your todo needs a title!");
+//     return;
+//   }
 
-  const nextTodo = new Todo(title);
-  todoList.projects[project].todos.push(nextTodo);
+//   const nextTodo = new Todo(title);
+//   todoList.projects[project].todos.push(nextTodo);
 
-  console.log(`Adding your task to ${todoList.projects[project].title}...`);
-}
+//   console.log(`Adding your task to ${todoList.projects[project].title}...`);
+// }
 
 // Initialize default project and add it to our master project list.
 
@@ -100,6 +100,20 @@ const todoList = {
   projects: [new Project("Inbox", "This is where all of your todos live by default.")],
   getNumber: function () { return this.projects.length },
   display: function () { console.table(this.projects) },
+  addProject: function (title) { 
+    if (!title) {
+      logError("Your project needs a title!");
+      return;
+    }
+    this.projects.push(new Project(title));
+  },
+  addTodo: function (title, project = 0) {
+    if (!title) {
+      logError("Your todo needs a title!");
+      return;
+    }
+    this.projects[project].todos.push(new Todo(title));
+  },
 }
 
 todoList.display();
