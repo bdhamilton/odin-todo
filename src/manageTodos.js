@@ -20,7 +20,7 @@ class Todo {
       logError("You can't set a todo's title to blank.");
       return;
     }
-    
+
     this[field] = value;
     logSuccess(`Updated the ${field} of this todo to ${value}.`);
   }
@@ -55,6 +55,21 @@ class Project {
     }
 
     this.todos.push(new Todo(title));
+  }
+
+  delete() {
+    // Grab the index of the project we want to delete.
+    const index = todoList.projects.indexOf(this);
+
+    // Refuse to delete the default project.
+    if (index === 0) {
+      logError("You can't delete your inbox!");
+      return;
+    }
+
+    // Otherwise, delete it.
+    todoList.projects.splice(index, 1);
+    logSuccess("Your project has been deleted.");
   }
 }
 
