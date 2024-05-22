@@ -10,7 +10,7 @@ class Todo {
 
     this.title = title;
     this.projectID = projectID;
-    this.priority = "normal";
+    this.highPriority = false;
     this.completed = false;
   }
 
@@ -27,6 +27,10 @@ class Todo {
 
   toggleComplete() {
     this.completed = this.completed === false ? true : false;
+  }
+
+  togglePriority() {
+    this.highPriority = this.highPriority === false ? true : false;
   }
 
   delete() {
@@ -92,7 +96,6 @@ const todoList = {
       return;
     }
     this.projects.push(new Project(title));
-    this.display();
   },
 }
 
