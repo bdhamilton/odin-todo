@@ -11,7 +11,7 @@ on console logging for any sort of notices.
 */
 
 class Todo {
-  constructor(title, projectID = 0, description, dueDate, priority = "normal") {
+  constructor(title, projectID = 0) {
     if (title === undefined) {
       logError("You need at least a title!");
       return;
@@ -19,9 +19,7 @@ class Todo {
 
     this.title = title;
     this.projectID = projectID;
-    this.description = description;
-    this.dueDate = dueDate;
-    this.priority = priority;
+    this.priority = "normal";
     this.completed = false;
   }
 
@@ -41,10 +39,6 @@ class Todo {
 
   toggleComplete() {
     this.completed = this.completed === false ? true : false;
-  }
-
-  display() {
-    console.table(this);
   }
 }
 
