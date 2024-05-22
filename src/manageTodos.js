@@ -107,8 +107,6 @@ that shield it?
 
 const todoList = {
   projects: [new Project("Inbox", "This is where all of your todos live by default.")],
-  getNumber: function () { return this.projects.length },
-  display: function () { console.table(this.projects) }, // For debugging
   addProject: function (title) { 
     if (!title) {
       logError("Your project needs a title!");
