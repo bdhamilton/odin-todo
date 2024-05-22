@@ -76,7 +76,7 @@ class Project {
 
 /*
 I'm creating this function with the thought that I don't want the 
-`projectList` variable to be modifiable from the main script. If I only
+`todoList` variable to be modifiable from the main script. If I only
 export this function and not the variable, does 
 that shield it?
 */
@@ -87,10 +87,10 @@ function addProject(title, description) {
   }
 
   const nextProject = new Project(title, description);
-  projectList.push(nextProject);
+  todoList.projects.push(nextProject);
 
   console.log(`Adding "${title}" to your list of projects...`);
-  console.log(`You now have ${projectList.length} working projects.`)
+  console.log(`You now have ${todoList.getNumber()} working projects.`)
 }
 
 function addTodo(title, project = 0) {
@@ -100,15 +100,20 @@ function addTodo(title, project = 0) {
   }
 
   const nextTodo = new Todo(title);
-  projectList[project].todos.push(nextTodo);
+  todoList.projects[project].todos.push(nextTodo);
 
-  console.log(`Adding your task to ${projectList[project].title}...`);
+  console.log(`Adding your task to ${todoList.projects[project].title}...`);
 }
 
 // Initialize default project and add it to our master project list.
-const projectList = [];
-const baseProject = new Project("Inbox", "This is where all of your todos live by default.");
-projectList.push(baseProject);
+
+const todoList = {
+  projects: [new Project("Inbox", "This is where all of your todos live by default.")],
+  getNumber: function () { return this.projects.length },
+  display: function () { console.table(this.projects) },
+}
+
+todoList.display();
 
 // Do I need to export the classes in order to use their constructors?
 export {
