@@ -1,7 +1,11 @@
 function displayProjects(todoList) {
-  console.log("Here are your current projects:");
+  const projectList = document.querySelector("#projects");
+
   for (let i = 0; i < todoList.projects.length; i++) {
-    console.log(`${i + 1}: ${todoList.projects[i].title}`);
+    const nextProject = document.createElement("li");
+    nextProject.dataset.id = i;
+    nextProject.innerText = todoList.projects[i].title;
+    projectList.appendChild(nextProject);
   }
 }
 
