@@ -100,7 +100,7 @@ function addTodo(title, project = 0) {
   }
 
   const nextTodo = new Todo(title);
-  projectList[project].push(nextTodo);
+  projectList[project].todos.push(nextTodo);
 
   console.log(`Adding your task to ${projectList[project].title}...`);
 }
@@ -111,4 +111,9 @@ const baseProject = new Project("Inbox", "This is where all of your todos live b
 projectList.push(baseProject);
 
 // Do I need to export the classes in order to use their constructors?
-export {Todo, Project, addProject, addTodo};
+export {
+  Todo,
+  Project,
+  addProject,
+  addTodo
+}
