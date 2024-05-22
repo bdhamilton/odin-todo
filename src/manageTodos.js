@@ -43,9 +43,8 @@ class Todo {
 }
 
 class Project {
-  constructor(title, description) {
+  constructor(title) {
     this.title = title;
-    this.description = description;
     this.todos = [];  // This blank array is where we'll keep our list of todos.
   }
 
@@ -61,10 +60,6 @@ class Project {
     } else {
       logError("You can only update titles and descriptions.");
     }
-  }
-
-  display() {
-    console.table(this);
   }
 }
 
