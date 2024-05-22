@@ -61,6 +61,15 @@ class Project {
       logError("You can only update titles and descriptions.");
     }
   }
+
+  addTodo(title) {
+    if (!title) {
+      logError("Your todo needs a title!");
+      return;
+    }
+
+    this.todos.push(new Todo(title));
+  }
 }
 
 /*
@@ -106,14 +115,6 @@ const todoList = {
       return;
     }
     this.projects.push(new Project(title));
-    this.display();
-  },
-  addTodo: function (title, project = 0) {
-    if (!title) {
-      logError("Your todo needs a title!");
-      return;
-    }
-    this.projects[project].todos.push(new Todo(title));
     this.display();
   },
 }
