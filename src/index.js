@@ -90,6 +90,12 @@ function setListeners() {
   for (let i = 0; i < deleteButtons.length; i++) {
     deleteButtons[i].addEventListener("click", deleteItem);
   }
+
+  // Listen for project toggling
+  const projectButtons = document.querySelectorAll("#projects button");
+  for (let i = 0; i < projectButtons.length; i++) {
+    projectButtons[i].addEventListener("click", selectProject);
+  }
 }
 
 function addProject(event) {
@@ -127,6 +133,11 @@ function deleteItem(event) {
     myList.projects[project].deleteTodo(myList.projects[project], event.target.dataset.todo);
   }
 
+  writeList(myList);
+}
+
+function selectProject(event) {
+  myList.selectProject(event.target.dataset.project);
   writeList(myList);
 }
 
