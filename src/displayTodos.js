@@ -94,7 +94,7 @@ function displayTodos(list) {
   }
   
   // Handle requests to add a project.
-  function addProject(event) {
+  function addProject() {
     // Grab new project title
     const projectInput = document.querySelector('#newproject');
     const newProject = projectInput.value;
@@ -112,7 +112,7 @@ function displayTodos(list) {
   }
   
   // Handle requests to add a todo to a particular project.
-  function addTodo(event) {
+  function addTodo() {
     // Grab new todo title
     const todoInput = document.querySelector("#newtodo");
     const newTodo = todoInput.value;
@@ -130,12 +130,17 @@ function displayTodos(list) {
   
   // Handle requests to deal with either a project or a todo.
   function deleteItem(event) {
-    // Grab item type and ID
+    // If a project has been selected:
     if (event.target.dataset.project) {
+      // Delete it.
       list.deleteProject(list, event.target.dataset.project);
-    } else if (event.target.dataset.todo) {
-      const project = document.querySelector("#todos").dataset.project;
-      list.projects[project].deleteTodo(list.projects[project], event.target.dataset.todo);
+    } 
+    
+    // If a todo has been selected:
+    else if (event.target.dataset.todo) {
+      // Delete it from the selected project.
+      const project = list.projects[list.selectedProject];
+      project.deleteTodo(project, event.target.dataset.todo);
     }
   
     updateList();
