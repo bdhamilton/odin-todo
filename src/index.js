@@ -34,6 +34,7 @@ function writeList(list) {
     
     // Create and append a button for each project
     const nextProject = document.createElement("button");
+    nextProject.classList.add("project-button")
     nextProject.dataset.project = i;
     nextProject.innerText = list.projects[i].title;
     nextListItem.appendChild(nextProject);
@@ -61,6 +62,7 @@ function writeList(list) {
     const nextListItem = document.createElement("li");
     
     const nextTodo = document.createElement("button");
+    nextTodo.classList.add("todo-button");
     nextTodo.dataset.todo = i;
     if (project.todos[i].completed === true) {
       nextTodo.classList.add("complete");
@@ -91,10 +93,16 @@ function setListeners() {
     deleteButtons[i].addEventListener("click", deleteItem);
   }
 
-  // Listen for project toggling
-  const projectButtons = document.querySelectorAll("#projects button");
+  // Listen for project switching
+  const projectButtons = document.querySelectorAll(".project-button");
   for (let i = 0; i < projectButtons.length; i++) {
     projectButtons[i].addEventListener("click", selectProject);
+  }
+
+  // Listen for todo completion
+  const todoButtons = document.querySelectorAll(".todo-button");
+  for (let i = 0; i < todoButtons.length; i++) {
+    todoButtons[i].addEventListener("click", completeTodo);
   }
 }
 
@@ -138,6 +146,12 @@ function deleteItem(event) {
 
 function selectProject(event) {
   myList.selectProject(event.target.dataset.project);
+  writeList(myList);
+}
+
+function completeTodo(event) {
+  myList.projects[myList.selectedProject].todos[event.target.dataset.todo].
+  toggleComplete();
   writeList(myList);
 }
 

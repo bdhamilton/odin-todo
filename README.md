@@ -13,7 +13,7 @@ This first version of the UI should be able to add, complete, and delete todos i
 - [X] It should have a way to add new todos to a selected project.
 - [X] It should have a way to delete projects
 - [X] It should have a way to delete todos.
-- [ ] It should have a way to toggle todos complete.
+- [X] It should have a way to toggle todos complete.
 - [X] It should have a way to switch between projects being displayed.
 
 ### v1: Write up core logic in its own module
