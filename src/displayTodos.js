@@ -95,12 +95,15 @@ function displayTodos(list) {
   
   // Handle requests to add a project.
   function addProject(event) {
-    // Grab new project title and clear the input
+    // Grab new project title
     const projectInput = document.querySelector('#newproject');
     const newProject = projectInput.value;
+
+    // If nothing has been entered, quit.
+    if (newProject === '') return;
+
+    // Otherwise, blank the field and add it to the project list.
     projectInput.value = '';
-  
-    // Add the new project 
     list.addProject(newProject);
   
     // Select the newly created list and update
@@ -110,14 +113,17 @@ function displayTodos(list) {
   
   // Handle requests to add a todo to a particular project.
   function addTodo(event) {
-    // Grab new todo title and clear the input
+    // Grab new todo title
     const todoInput = document.querySelector("#newtodo");
     const newTodo = todoInput.value;
+
+    // If nothing has been entered, quit.
+    if (newTodo === '') return;
+
+    // Otherwise, blank the field and add it to the project
     todoInput.value = '';
-  
-    // Add the new todo
     list.projects[list.selectedProject].addTodo(newTodo);
-  
+
     // Rewrite the todo list
     updateList();
   }
