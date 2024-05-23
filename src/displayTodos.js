@@ -24,4 +24,12 @@ function displayTodos(project) {
   }
 }
 
+function writeList(list) {
+  /*
+  Grab project list, selected project, todo list.
+  Grab key DOM element.
+  Write data
+  */
+}
+
 export { displayProjects, displayTodos };

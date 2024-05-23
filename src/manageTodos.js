@@ -88,15 +88,22 @@ class Project {
 
 // The master todo list, with projects inside and todos inside those projects.
 // This will be the object we pass outside the module.
-const todoList = {
-  projects: [new Project("Inbox", "This is where all of your todos live by default.")],
-  addProject: function (title) { 
-    if (!title) {
-      logError("Your project needs a title!");
-      return;
-    }
+class todoList {
+  constructor() {
+    // Initialize a new project list with a default project inside.
+    this.projects = [new Project("Inbox", "This is where all of your todos live by default.")];
+
+    // Start by selecting the default project.
+    this.selectedProject = 0;
+  }
+
+  addProject(title) {
     this.projects.push(new Project(title));
-  },
+  }
+
+  selectProject(project) {
+    this.selectedProject = project;
+  }
 }
 
 export default todoList;
