@@ -27,6 +27,7 @@ function writeList(list) {
 
   // Print the todos from that project.
   todoHeader.innerText = project.title;
+  todoList.dataset.project = list.selectedProject;
 
   for (let i = 0; i < project.todos.length; i++) {
     const nextTask = document.createElement("button");
