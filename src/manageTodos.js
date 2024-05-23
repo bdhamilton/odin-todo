@@ -32,15 +32,6 @@ class Todo {
   togglePriority() {
     this.highPriority = this.highPriority === false ? true : false;
   }
-
-  delete() {
-    // Grab the index of the todo we want to delete.
-    const index = todoList.projects[this.projectID].todos.indexOf(this);
-
-    // Delete it.
-    todoList.projects[this.projectID].todos.splice(index, 1);
-    logSuccess("Your todo has been deleted.");
-  }
 }
 
 // A class for building and managing individual projects
@@ -70,19 +61,9 @@ class Project {
     this.todos.push(new Todo(title));
   }
 
-  delete() {
-    // Grab the index of the project we want to delete.
-    const index = todoList.projects.indexOf(this);
-
-    // Refuse to delete the default project.
-    if (index === 0) {
-      logError("You can't delete your inbox!");
-      return;
-    }
-
-    // Otherwise, delete it.
-    todoList.projects.splice(index, 1);
-    logSuccess("Your project has been deleted.");
+  deleteTodo(project, id) {
+    project.todos.splice(id, 1);
+    logSuccess("Your todo has been deleted.");
   }
 }
 
@@ -99,6 +80,11 @@ class todoList {
 
   addProject(title) {
     this.projects.push(new Project(title));
+  }
+
+  deleteProject(list, id) {
+    list.projects.splice(id, 1);
+    logSuccess("Your project has been deleted.");
   }
 
   selectProject(project) {
