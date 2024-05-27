@@ -16,7 +16,7 @@ class Todo {
 
   update(field, value) {
     // Make sure we don't blank a todo title.
-    if (field === title && !value) {
+    if (field === 'title' && !value) {
       logError("You can't set a todo's title to blank.");
       return;
     }
@@ -43,7 +43,7 @@ class Project {
 
   update(field, value) {
     // Make sure we don't blank a todo title.
-    if (field === title && !value) {
+    if (field === 'title' && !value) {
       logError("You can't set a todo's title to blank.");
       return;
     }

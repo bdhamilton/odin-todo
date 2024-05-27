@@ -17,6 +17,7 @@ function displayTodos(list) {
     // Add all of the projects
     for (let i = 0; i < list.projects.length; i++) {
       const nextListItem = document.createElement("li");
+      nextListItem.dataset.project = i;
       
       // Create and append a button for each project
       const nextProject = document.createElement("button");
@@ -45,24 +46,80 @@ function displayTodos(list) {
     todoList.dataset.project = list.selectedProject;
   
     for (let i = 0; i < project.todos.length; i++) {
-      const nextListItem = document.createElement("li");
-      
-      const nextTodo = document.createElement("button");
-      nextTodo.classList.add("todo-button");
+      // Each todo should have: complete button, title, description, 
+      // due date, priority button, and delete button (in that order).
+
+      // <li data-project="0">
+      //   <button class="toggle-complete">[✓]</button>
+      //   <strong>Title of Todo</strong>
+      //   <div class="description"><span>Description:</span> Short description.</div>
+      //   <div class="due-date"><span>Due:</span> Due date</div>
+      //   <button class="priority">[!]</button>
+      //   <button class="delete">[X]</button>
+      // </li>
+
+      // Simplify our variable name.
+      const thisTodo = project.todos[i];
+
+      // Create all the elements with necessary attributes and contents.
+      const nextTodo = document.createElement("li");
       nextTodo.dataset.todo = i;
-      if (project.todos[i].completed === true) {
-        nextTodo.classList.add("complete");
-      }
-      nextTodo.innerText = project.todos[i].title;
+      if (thisTodo.completed) nextTodo.classList.add("complete");
+
+      const todoComplete = document.createElement("button");
+      todoComplete.classList.add("toggle-complete");
+      todoComplete.innerText = thisTodo.completed ? "[✓]" : "[ ]";
+
+      const todoTitle = document.createElement("strong");
+      todoTitle.innerText = thisTodo.title;
+
+      const todoDescription = document.createElement("div");
+      todoDescription.classList.add("description");
+      const description = thisTodo.description ? thisTodo.description : "No description.";
+      todoDescription.innerHTML = `<span>Description:</span> ${description}`;
       
-      const deleteButton = document.createElement("button")
-      deleteButton.innerText = "Delete";
-      deleteButton.dataset.todo = i;
-      deleteButton.classList.add("delete");
+      const todoDue = document.createElement("div");
+      todoDue.classList.add("due-date");
+      const due = thisTodo.due ? thisTodo.due : "No due date.";
+      todoDue.innerHTML = `<span>Due:</span> ${due}`;
+
+      const todoPriority = document.createElement("button");
+      todoPriority.classList.add("priority");
+      if (thisTodo.priority === true) todoPriority.classList.add("priority-high");
+      todoPriority.innerText = thisTodo.highPriority ? "[!]" : "[ ]";
+
+      const todoDelete = document.createElement("button");
+      todoDelete.classList.add("delete");
+      todoDelete.innerText = "X";
+
+      // Write everything to the DOM
+      nextTodo.appendChild(todoComplete);
+      nextTodo.appendChild(todoTitle);
+      nextTodo.appendChild(todoDescription);
+      nextTodo.appendChild(todoDue);
+      nextTodo.appendChild(todoPriority);
+      nextTodo.appendChild(todoDelete);
+      todoList.appendChild(nextTodo);
+
+      // Add IDs to everything
+      // ()
+      
+      // const nextTodo = document.createElement("button");
+      // nextTodo.classList.add("todo-button");
+      // nextTodo.dataset.todo = i;
+      // if (project.todos[i].completed === true) {
+      //   nextTodo.classList.add("complete");
+      // }
+      // nextTodo.innerText = project.todos[i].title;
+      
+      // const deleteButton = document.createElement("button")
+      // deleteButton.innerText = "Delete";
+      // deleteButton.dataset.todo = i;
+      // deleteButton.classList.add("delete");
   
-      nextListItem.appendChild(nextTodo);
-      nextListItem.appendChild(deleteButton);
-      todoList.appendChild(nextListItem);
+      // nextListItem.appendChild(nextTodo);
+      // nextListItem.appendChild(deleteButton);
+      // todoList.appendChild(nextListItem);
     }
   
     setListeners();
@@ -70,26 +127,48 @@ function displayTodos(list) {
   
   // Listen for changes from the user.
   function setListeners() {
+    // Listen for any clicks on a todo li
+    const items = document.querySelectorAll("#todos li, #projects li");
+    for (let i = 0; i < items.length; i++) {
+      items[i].addEventListener("click", routeEvent);
+    }
+
     // Listen for add buttons 
     document.querySelector("#addproject").addEventListener("click", addProject);
     document.querySelector("#addtodo").addEventListener("click", addTodo);
   
-    // Listen for delete buttons
-    const deleteButtons = document.querySelectorAll(".delete");
-    for (let i = 0; i < deleteButtons.length; i++) {
-      deleteButtons[i].addEventListener("click", deleteItem);
-    }
+    // // Listen for delete buttons
+    // const deleteButtons = document.querySelectorAll(".delete");
+    // for (let i = 0; i < deleteButtons.length; i++) {
+    //   deleteButtons[i].addEventListener("click", deleteItem);
+    // }
   
-    // Listen for project switching
-    const projectButtons = document.querySelectorAll(".project-button");
-    for (let i = 0; i < projectButtons.length; i++) {
-      projectButtons[i].addEventListener("click", selectProject);
-    }
+    // // Listen for project switching
+    // const projectButtons = document.querySelectorAll(".project-button");
+    // for (let i = 0; i < projectButtons.length; i++) {
+    //   projectButtons[i].addEventListener("click", selectProject);
+    // }
   
-    // Listen for todo completion
-    const todoButtons = document.querySelectorAll(".todo-button");
-    for (let i = 0; i < todoButtons.length; i++) {
-      todoButtons[i].addEventListener("click", completeTodo);
+    // // Listen for todo completion
+    // const todoButtons = document.querySelectorAll(".todo-button");
+    // for (let i = 0; i < todoButtons.length; i++) {
+    //   todoButtons[i].addEventListener("click", completeTodo);
+    // }
+  }
+
+  function routeEvent(event) {
+    if (event.currentTarget.dataset.project) {
+      console.log(`You clicked on project ${event.currentTarget.dataset.project}.`);
+    }
+
+    else if (event.currentTarget.dataset.todo) {
+      const todoID = event.currentTarget.dataset.todo;
+
+      if (event.target.classList.contains())
+
+
+      console.log(`You clicked on todo ${todoID}.`);
+      console.log(event.target.classList.contains("due-date"));
     }
   }
   
