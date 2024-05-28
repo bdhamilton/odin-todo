@@ -131,7 +131,7 @@ function displayTodos(list) {
     const items = document.querySelectorAll("#todos li, #projects li");
     for (let i = 0; i < items.length; i++) {
       // And send them to a handler
-      items[i].addEventListener("click", handleInput);
+      items[i].addEventListener("click", handleClicks);
     }
 
     // Listen for add buttons 
@@ -139,14 +139,16 @@ function displayTodos(list) {
     document.querySelector("#addtodo").addEventListener("click", addTodo);
   }
 
-  function handleInput(event) {
-    // Handle interaction with projects first
+  // Decide what to do depending on where the user clicked.
+  function handleClicks(event) {
     if (event.currentTarget.dataset.project) {
+      // First handle project interactions.
       const projectId = Number(event.currentTarget.dataset.project);
 
       // Either select or delete the project
       if (event.target.classList.contains('project-button')) {
         list.selectProject(projectId);
+        updateList();
       } else if (event.target.classList.contains('delete')) {
         // If we're deleting the current project,
         // switch back to the default project first.
@@ -154,30 +156,44 @@ function displayTodos(list) {
           list.selectProject(0);
         }
         list.deleteProject(list, projectId);
+        updateList();
       }
     } else if (event.currentTarget.dataset.todo) {
-      // Now let's handle todo interactions
+      // Then handle todo interactions.
       const todoId = Number(event.currentTarget.dataset.todo);
       const project = list.projects[list.selectedProject];    const classList = event.target.classList;
       const todo = project.todos[todoId];
 
       if (classList.contains('toggle-complete')) {
         todo.toggleComplete();
+        updateList();
       } else if (classList.contains('priority')) {
         todo.togglePriority();
+        updateList();
       } else if (classList.contains('delete')) {
         project.deleteTodo(project, todoId);
+        updateList();
       } else if (classList.contains('description')) {
         
       } else if (classList.contains('due-date')) {
 
       } else {
+        // Create a new input element
+        const editInput = document.createElement('input');
+        editInput.value = todo.title;
+        editInput.classList.add('edit-title');
+        editInput.dataset.todo = todoId;
 
+        // Replace the current title with the new input
+        const currentTitle = event.currentTarget.querySelector('strong');
+        currentTitle.after(editInput);
+        currentTitle.remove();
+
+        // Focus on it, and set up an event listener
+        editInput.focus();
+        editInput.addEventListener('focusout', updateTodoTitle);
       }
     }
-
-    // Update the app.
-    updateList();
   }
   
   // Handle requests to add a project.
@@ -212,6 +228,15 @@ function displayTodos(list) {
     list.projects[list.selectedProject].addTodo(newTodo);
 
     // Rewrite the todo list
+    updateList();
+  }
+
+  // When the user enteres a new todo title, update it and update the app.
+  function updateTodoTitle() {
+    const todoInput = document.querySelector('.edit-title');
+    const thisTodo = list.projects[list.selectedProject].todos[todoInput.dataset.todo];
+    thisTodo.update('title', todoInput.value);
+
     updateList();
   }
 }
