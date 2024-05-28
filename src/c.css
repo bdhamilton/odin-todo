@@ -60,11 +60,13 @@ ul {
 
 header {
   background-color: var(--header-color);
+  box-shadow: 1px 0 1px #666;
   color: var(--projects-color);
   height: 100vh;
-  width:60px;
+  width:65px;
   position: relative;
   display: flex;
+  z-index: 2;
 }
 
 header h1 {
@@ -80,16 +82,18 @@ header h1 {
 
 .project-section {
   background-color: var(--projects-color);
-  box-shadow: 10px 0 5px -2px #888;
+  box-shadow: 1px 0 5px #666;
   flex: 1;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: end;
+  z-index: 1;
 }
 
 .add-div {
   background-color: white;
+  border-top: 1px solid #666;
   opacity: .5;
   display: flex;
   flex-direction: row-reverse;
@@ -100,12 +104,13 @@ header h1 {
 }
 
 .add-div input[type="button"] {
-  width: 40px;
   background: transparent;
-  border: 0;
-  text-indent: -2000px;
-  outline: 0;
   background: no-repeat center/70% url(img/plus-circle.svg);
+  border: 0;
+  margin-left: 5px;
+  outline: 0;
+  text-indent: -2000px;
+  width: 40px;
 }
 
 .add-div input[type="text"] {
