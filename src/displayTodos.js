@@ -127,49 +127,57 @@ function displayTodos(list) {
   
   // Listen for changes from the user.
   function setListeners() {
-    // Listen for any clicks on a todo li
+    // Listen for any clicks on a project or todo
     const items = document.querySelectorAll("#todos li, #projects li");
     for (let i = 0; i < items.length; i++) {
-      items[i].addEventListener("click", routeEvent);
+      // And send them to a handler
+      items[i].addEventListener("click", handleInput);
     }
 
     // Listen for add buttons 
     document.querySelector("#addproject").addEventListener("click", addProject);
     document.querySelector("#addtodo").addEventListener("click", addTodo);
-  
-    // // Listen for delete buttons
-    // const deleteButtons = document.querySelectorAll(".delete");
-    // for (let i = 0; i < deleteButtons.length; i++) {
-    //   deleteButtons[i].addEventListener("click", deleteItem);
-    // }
-  
-    // // Listen for project switching
-    // const projectButtons = document.querySelectorAll(".project-button");
-    // for (let i = 0; i < projectButtons.length; i++) {
-    //   projectButtons[i].addEventListener("click", selectProject);
-    // }
-  
-    // // Listen for todo completion
-    // const todoButtons = document.querySelectorAll(".todo-button");
-    // for (let i = 0; i < todoButtons.length; i++) {
-    //   todoButtons[i].addEventListener("click", completeTodo);
-    // }
   }
 
-  function routeEvent(event) {
+  function handleInput(event) {
+    // Handle interaction with projects first
     if (event.currentTarget.dataset.project) {
-      console.log(`You clicked on project ${event.currentTarget.dataset.project}.`);
+      const projectId = Number(event.currentTarget.dataset.project);
+
+      // Either select or delete the project
+      if (event.target.classList.contains('project-button')) {
+        list.selectProject(projectId);
+      } else if (event.target.classList.contains('delete')) {
+        // If we're deleting the current project,
+        // switch back to the default project first.
+        if (list.selectedProject === projectId) {
+          list.selectProject(0);
+        }
+        list.deleteProject(list, projectId);
+      }
+    } else if (event.currentTarget.dataset.todo) {
+      // Now let's handle todo interactions
+      const todoId = Number(event.currentTarget.dataset.todo);
+      const project = list.projects[list.selectedProject];    const classList = event.target.classList;
+      const todo = project.todos[todoId];
+
+      if (classList.contains('toggle-complete')) {
+        todo.toggleComplete();
+      } else if (classList.contains('priority')) {
+        todo.togglePriority();
+      } else if (classList.contains('delete')) {
+        project.deleteTodo(project, todoId);
+      } else if (classList.contains('description')) {
+        
+      } else if (classList.contains('due-date')) {
+
+      } else {
+
+      }
     }
 
-    else if (event.currentTarget.dataset.todo) {
-      const todoID = event.currentTarget.dataset.todo;
-
-      if (event.target.classList.contains())
-
-
-      console.log(`You clicked on todo ${todoID}.`);
-      console.log(event.target.classList.contains("due-date"));
-    }
+    // Update the app.
+    updateList();
   }
   
   // Handle requests to add a project.
@@ -204,37 +212,6 @@ function displayTodos(list) {
     list.projects[list.selectedProject].addTodo(newTodo);
 
     // Rewrite the todo list
-    updateList();
-  }
-  
-  // Handle requests to deal with either a project or a todo.
-  function deleteItem(event) {
-    // If a project has been selected:
-    if (event.target.dataset.project) {
-      // Delete it.
-      list.deleteProject(list, event.target.dataset.project);
-    } 
-    
-    // If a todo has been selected:
-    else if (event.target.dataset.todo) {
-      // Delete it from the selected project.
-      const project = list.projects[list.selectedProject];
-      project.deleteTodo(project, event.target.dataset.todo);
-    }
-  
-    updateList();
-  }
-  
-  // Handle requests to change the project
-  function selectProject(event) {
-    list.selectProject(event.target.dataset.project);
-    updateList();
-  }
-  
-  // Handle requests to toggle a todo complete
-  function completeTodo(event) {
-    list.projects[list.selectedProject].todos[event.target.dataset.todo].
-    toggleComplete();
     updateList();
   }
 }
