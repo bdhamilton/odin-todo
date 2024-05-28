@@ -12,6 +12,7 @@ class Todo {
     this.projectID = projectID;
     this.highPriority = false;
     this.completed = false;
+    this.dueDate = undefined;
   }
 
   update(field, value) {

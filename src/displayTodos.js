@@ -80,8 +80,8 @@ function displayTodos(list) {
       
       const todoDue = document.createElement("div");
       todoDue.classList.add("due-date");
-      const due = thisTodo.due ? thisTodo.due : "No due date.";
-      todoDue.innerHTML = `<span>Due:</span> ${due}`;
+      const dueDate = thisTodo.dueDate ? thisTodo.dueDate : "No due date.";
+      todoDue.innerHTML = `<span>Due:</span> ${dueDate}`;
 
       const todoPriority = document.createElement("button");
       todoPriority.classList.add("priority");
@@ -174,9 +174,36 @@ function displayTodos(list) {
         project.deleteTodo(project, todoId);
         updateList();
       } else if (classList.contains('description')) {
-        
-      } else if (classList.contains('due-date')) {
+        // Create a new input element
+        const editDescription = document.createElement('input');
+        editDescription.value = todo.description || '';
+        if (!todo.description) editDescription.placeholder = 'Add a description';
+        editDescription.classList.add('edit-description');
+        editDescription.dataset.todo = todoId;
 
+        // Replace the current title with the new input
+        const currentDescription = event.currentTarget.querySelector('.description');
+        currentDescription.innerHTML = '';
+        currentDescription.appendChild(editDescription);
+
+        // Focus on it, and set up an event listener
+        editDescription.focus();
+        editDescription.addEventListener('focusout', updateTodoDescription);        
+      } else if (classList.contains('due-date')) {
+        // Create a new input element
+        const editDueDate = document.createElement('input');
+        editDueDate.type = 'date';
+        editDueDate.classList.add('edit-duedate');
+        editDueDate.dataset.todo = todoId;
+
+        // Replace the current title with the new input
+        const currentDueDate = event.currentTarget.querySelector('.due-date');
+        currentDueDate.innerHTML = '';
+        currentDueDate.appendChild(editDueDate);
+
+        // Focus on it, and set up an event listener
+        editDueDate.focus();
+        editDueDate.addEventListener('focusout', updateTodoDueDate);   
       } else {
         // Create a new input element
         const editInput = document.createElement('input');
@@ -231,7 +258,7 @@ function displayTodos(list) {
     updateList();
   }
 
-  // When the user enteres a new todo title, update it and update the app.
+  // When the user enters a new todo title, update it and update the app.
   function updateTodoTitle() {
     const todoInput = document.querySelector('.edit-title');
     const thisTodo = list.projects[list.selectedProject].todos[todoInput.dataset.todo];
@@ -239,6 +266,24 @@ function displayTodos(list) {
 
     updateList();
   }
+
+   // When the user enteres a new todo description, update it and update the app.
+   function updateTodoDescription() {
+    const todoInput = document.querySelector('.edit-description');
+    const thisTodo = list.projects[list.selectedProject].todos[todoInput.dataset.todo];
+    thisTodo.update('description', todoInput.value);
+
+    updateList();
+  }
+
+  // When the user enteres a new todo description, update it and update the app.
+  function updateTodoDueDate() {
+    const todoInput = document.querySelector('.edit-duedate');
+    const thisTodo = list.projects[list.selectedProject].todos[todoInput.dataset.todo];
+    thisTodo.update('dueDate', todoInput.value);
+
+    updateList();
+  }  
 }
 
 export default displayTodos;
