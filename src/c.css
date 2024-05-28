@@ -39,8 +39,22 @@ body {
   font-family: Roboto, serif;
   --header-color: hsl(185, 14%, 17%);
   --projects-color: hsl(185, 14%, 47%);
-  --todos-color: hsl(168, 26%, 69%);
-  
+  --todos-color: hsl(167, 27%, 69%);
+  --standard-padding: 15px;
+  font-size: 18px;
+}
+
+h2 {
+  text-transform: uppercase;
+  font-size: .9rem;
+  letter-spacing: 1px;
+  padding: var(--standard-padding);
+  display: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
 }
 
 /** || Header */
@@ -60,5 +74,59 @@ header h1 {
   left: 0;
   writing-mode: vertical-lr;
   rotate: 180deg;
-  margin-bottom: 20px;
+  margin-bottom: var(--standard-padding);
+}
+
+/** || Projects list  */
+
+.project-section {
+  background-color: var(--projects-color);
+  box-shadow: 10px 0 5px -2px #888;
+  flex: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.add-div {
+  background-color: white;
+  opacity: .5;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.add-div:focus-within {
+  opacity: .8;
+}
+
+.add-div input[type="button"] {
+  width: 40px;
+  background: transparent;
+  border: 0;
+  text-indent: -2000px;
+  outline: 0;
+  background: no-repeat center/70% url(img/plus-circle.svg);
+}
+
+.add-div input[type="text"] {
+  background-color: inherit;
+  border: 0;
+  flex: 1;
+  font-family: inherit;
+  font-weight: bold;
+  padding: var(--standard-padding);
+  outline: 0;
+}
+
+
+
+/** || Todo list  */
+
+.todo-section {
+  background-color: var(--todos-color);
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 }

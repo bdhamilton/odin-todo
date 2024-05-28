@@ -8,7 +8,7 @@ A todo list for The Odin Project
 - [X] The header should look nice.
 - [ ] The project list should look nice.
   - [ ] It should be clear which project is selected.
-  - [ ] The input for adding projects should be clearly differentiated.
+  - [X] The input for adding projects should be clearly differentiated.
   - [ ] The delete project button should be clear but not overpowering.
 - [ ] The todo list should look nice.
   - [ ] The toggle buttons should be easily to see and click.

@@ -136,7 +136,13 @@ function displayTodos(list) {
 
     // Listen for add buttons 
     document.querySelector("#addproject").addEventListener("click", addProject);
+    document.querySelector("#newproject").addEventListener("keypress", (event) => {
+      if (event.key === "Enter") addProject();
+    });
     document.querySelector("#addtodo").addEventListener("click", addTodo);
+    document.querySelector("#newtodo").addEventListener("keypress", (event) => {
+      if (event.key === "Enter") addTodo();
+    });
   }
 
   // Decide what to do depending on where the user clicked.
