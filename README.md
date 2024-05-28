@@ -3,6 +3,17 @@ A todo list for The Odin Project
 
 ## Versions
 
+### v4: Design the UI
+
+- [ ] The header should look nice.
+- [ ] The project list should look nice.
+  - [ ] It should be clear which project is selected.
+  - [ ] The input for adding projects should be clearly differentiated.
+  - [ ] The delete project button should be clear but not overpowering.
+- [ ] The todo list should look nice.
+  - [ ] The toggle buttons should be easily to see and click.
+  - [ ] The extra detail should be easy to read but not overpowering.
+
 ### v3: Add more detailed functionality
 
 I want to add support now, first in the internal logic and then in the UI, for descriptions, due dates, and priority markers. Some of this ground has already been paved in the internal logic but will need to be fleshed out. Some of the UI might need to be updated to accommodate the extra information.
