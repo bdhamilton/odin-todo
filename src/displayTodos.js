@@ -18,6 +18,9 @@ function displayTodos(list) {
     for (let i = 0; i < list.projects.length; i++) {
       const nextListItem = document.createElement("li");
       nextListItem.dataset.project = i;
+      if (list.selectedProject === i) {
+        nextListItem.classList.add("selected");
+      }
       
       // Create and append a button for each project
       const nextProject = document.createElement("button");
