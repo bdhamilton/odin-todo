@@ -1,0 +1,64 @@
+/*	// CSS Reset
+	// https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+#root, #__next {
+  isolation: isolate;
+}
+
+/** || Core */
+
+body {
+  display: flex;
+  font-family: Roboto, serif;
+  --header-color: hsl(185, 14%, 17%);
+  --projects-color: hsl(185, 14%, 47%);
+  --todos-color: hsl(168, 26%, 69%);
+  
+}
+
+/** || Header */
+
+header {
+  background-color: var(--header-color);
+  color: var(--projects-color);
+  height: 100vh;
+  width:60px;
+  position: relative;
+  display: flex;
+}
+
+header h1 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  writing-mode: vertical-lr;
+  rotate: 180deg;
+  margin-bottom: 20px;
+}

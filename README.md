@@ -5,7 +5,7 @@ A todo list for The Odin Project
 
 ### v4: Design the UI
 
-- [ ] The header should look nice.
+- [X] The header should look nice.
 - [ ] The project list should look nice.
   - [ ] It should be clear which project is selected.
   - [ ] The input for adding projects should be clearly differentiated.
