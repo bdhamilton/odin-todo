@@ -1,5 +1,13 @@
-# odin-todo
-A todo list for The Odin Project
+# get.organized
+
+A basic todo app, with the ability to maintain separate project lists.
+
+## Known issues
+
+- [ ] App header breaks on mobile
+- [ ] No error handling for long inputs or too many inputs
+- [ ] Date inputs don't have pulldowns
+- [ ] Long project or todo titles break the layout
 
 ## Versions
 
