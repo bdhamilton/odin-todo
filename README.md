@@ -3,6 +3,12 @@ A todo list for The Odin Project
 
 ## Versions
 
+### v5: Store app data on local machine
+
+- [ ] Projects and todos should be saved to local storage when added
+- [ ] Projects and todos should be saved to local storage when updated
+- [ ] App should draw from local storage when it first boots up
+
 ### v4: Design the UI
 
 - [X] The header should look nice.
