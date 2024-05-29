@@ -13,7 +13,7 @@ function displayTodos(list) {
     projectList.innerHTML = '';
     todoHeader.innerText = '';
     todoList.innerHTML = '';
-  
+
     // Add all of the projects
     for (let i = 0; i < list.projects.length; i++) {
       const nextListItem = document.createElement("li");
@@ -21,7 +21,7 @@ function displayTodos(list) {
       if (list.selectedProject === i) {
         nextListItem.classList.add("selected");
       }
-      
+
       // Create and append a button for each project
       const nextProject = document.createElement("button");
       nextProject.classList.add("project-button")
@@ -49,18 +49,6 @@ function displayTodos(list) {
     todoList.dataset.project = list.selectedProject;
   
     for (let i = 0; i < project.todos.length; i++) {
-      // Each todo should have: complete button, title, description, 
-      // due date, priority button, and delete button (in that order).
-
-      // <li data-project="0">
-      //   <button class="toggle-complete">[✓]</button>
-      //   <strong>Title of Todo</strong>
-      //   <div class="description"><span>Description:</span> Short description.</div>
-      //   <div class="due-date"><span>Due:</span> Due date</div>
-      //   <button class="priority">[!]</button>
-      //   <button class="delete">[X]</button>
-      // </li>
-
       // Simplify our variable name.
       const thisTodo = project.todos[i];
 
@@ -73,23 +61,28 @@ function displayTodos(list) {
       todoComplete.classList.add("toggle-complete");
       todoComplete.innerText = thisTodo.completed ? "[✓]" : "[ ]";
 
+      const todoInfo = document.createElement("div");
+      todoInfo.classList.add("todo-text");
+
       const todoTitle = document.createElement("strong");
       todoTitle.innerText = thisTodo.title;
+
+      const todoDue = document.createElement("div");
+      todoDue.classList.add("due-date");
+      const dueDate = thisTodo.dueDate ? thisTodo.dueDate : "No due date.";
+      todoDue.innerHTML = `<span>Due:</span> ${dueDate}`;
 
       const todoDescription = document.createElement("div");
       todoDescription.classList.add("description");
       const description = thisTodo.description ? thisTodo.description : "No description.";
       todoDescription.innerHTML = `<span>Description:</span> ${description}`;
       
-      const todoDue = document.createElement("div");
-      todoDue.classList.add("due-date");
-      const dueDate = thisTodo.dueDate ? thisTodo.dueDate : "No due date.";
-      todoDue.innerHTML = `<span>Due:</span> ${dueDate}`;
-
       const todoPriority = document.createElement("button");
       todoPriority.classList.add("priority");
-      if (thisTodo.priority === true) todoPriority.classList.add("priority-high");
-      todoPriority.innerText = thisTodo.highPriority ? "[!]" : "[ ]";
+      if (thisTodo.highPriority === true) {
+        todoPriority.classList.add("priority-high");
+      }
+      todoPriority.innerText = "!";
 
       const todoDelete = document.createElement("button");
       todoDelete.classList.add("delete");
@@ -97,32 +90,15 @@ function displayTodos(list) {
 
       // Write everything to the DOM
       nextTodo.appendChild(todoComplete);
-      nextTodo.appendChild(todoTitle);
-      nextTodo.appendChild(todoDescription);
-      nextTodo.appendChild(todoDue);
+
+      todoInfo.appendChild(todoTitle);
+      todoInfo.appendChild(todoDue);
+      todoInfo.appendChild(todoDescription);
+      nextTodo.appendChild(todoInfo);
+
       nextTodo.appendChild(todoPriority);
       nextTodo.appendChild(todoDelete);
       todoList.appendChild(nextTodo);
-
-      // Add IDs to everything
-      // ()
-      
-      // const nextTodo = document.createElement("button");
-      // nextTodo.classList.add("todo-button");
-      // nextTodo.dataset.todo = i;
-      // if (project.todos[i].completed === true) {
-      //   nextTodo.classList.add("complete");
-      // }
-      // nextTodo.innerText = project.todos[i].title;
-      
-      // const deleteButton = document.createElement("button")
-      // deleteButton.innerText = "Delete";
-      // deleteButton.dataset.todo = i;
-      // deleteButton.classList.add("delete");
-  
-      // nextListItem.appendChild(nextTodo);
-      // nextListItem.appendChild(deleteButton);
-      // todoList.appendChild(nextListItem);
     }
   
     setListeners();
@@ -197,7 +173,13 @@ function displayTodos(list) {
 
         // Focus on it, and set up an event listener
         editDescription.focus();
-        editDescription.addEventListener('focusout', updateTodoDescription);        
+        editDescription.addEventListener('focusout', updateTodoDescription);      
+        editDescription.addEventListener('keypress', (event) => {
+          if (event.key === "Enter")  {
+            editDescription.removeEventListener('focusout', updateTodoDescription);
+            updateTodoDescription();
+          }
+        });  
       } else if (classList.contains('due-date')) {
         // Create a new input element
         const editDueDate = document.createElement('input');
@@ -213,6 +195,12 @@ function displayTodos(list) {
         // Focus on it, and set up an event listener
         editDueDate.focus();
         editDueDate.addEventListener('focusout', updateTodoDueDate);   
+        editDueDate.addEventListener('keypress', (event) => {
+          if (event.key === "Enter")  {
+            editDueDate.removeEventListener('focusout', updateTodoDueDate);
+            updateTodoDueDate();
+          }
+        });
       } else {
         // Create a new input element
         const editInput = document.createElement('input');
@@ -228,6 +216,12 @@ function displayTodos(list) {
         // Focus on it, and set up an event listener
         editInput.focus();
         editInput.addEventListener('focusout', updateTodoTitle);
+        editInput.addEventListener('keypress', (event) => {
+          if (event.key === "Enter")  {
+            editInput.removeEventListener('focusout', updateTodoTitle);
+            updateTodoTitle();
+          }
+        });
       }
     }
   }
@@ -285,7 +279,7 @@ function displayTodos(list) {
     updateList();
   }
 
-  // When the user enteres a new todo description, update it and update the app.
+  // When the user enteres a new todo due date, update it and update the app.
   function updateTodoDueDate() {
     const todoInput = document.querySelector('.edit-duedate');
     const thisTodo = list.projects[list.selectedProject].todos[todoInput.dataset.todo];

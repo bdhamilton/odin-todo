@@ -1,4 +1,4 @@
-import { logError, logSuccess } from "./logger";
+import { logError, logSuccess } from "./logger.js";
 
 // A class for building and managing individual todo items
 class Todo {
