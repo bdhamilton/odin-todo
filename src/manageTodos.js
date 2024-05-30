@@ -71,12 +71,26 @@ class Project {
 // The master todo list, with projects inside and todos inside those projects.
 // This will be the object we pass outside the module.
 class todoList {
-  constructor() {
-    // Initialize a new project list with a default project inside.
-    this.projects = [new Project("Inbox", "This is where all of your todos live by default.")];
+  constructor(storedList) {
+    if (storedList) {
+      // If list has been pulled from storage, convert and use it.
+      Object.setPrototypeOf(storedList, new todoList());
+      for (const project of storedList.projects) {
+        Object.setPrototypeOf(project, new Project());
+        for (const todo of project.todos) {
+          Object.setPrototypeOf(todo, new Todo());
+        }
+      }
 
-    // Start by selecting the default project.
-    this.selectedProject = 0;
+      return storedList;
+    } else {
+      // Otherwise initialize a new one.
+      // Initialize a new project list.
+      this.projects = [new Project("Inbox", "This is where all of your todos live by default.")];
+  
+      // Start by selecting the default project.
+      this.selectedProject = 0;
+    }
   }
 
   addProject(title) {

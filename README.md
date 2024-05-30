@@ -13,9 +13,8 @@ A basic todo app, with the ability to maintain separate project lists.
 
 ### v5: Store app data on local machine
 
-- [ ] Projects and todos should be saved to local storage when added
-- [ ] Projects and todos should be saved to local storage when updated
-- [ ] App should draw from local storage when it first boots up
+- [X] App should save to local storage before user leaves
+- [X] App should draw from local storage when it first boots up
 
 ### v4: Design the UI
 
